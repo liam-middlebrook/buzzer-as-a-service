@@ -1,0 +1,22 @@
+author: Liam Middlebrook
+classifiers: []
+description: IRC Bot to play an audible buzzer sound
+directories: [/home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service, /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/docs,
+  /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/Buzzer_As_A_Service]
+docs_dir: /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/docs
+email: liammiddlebrook@gmail.com
+encoding: utf8
+files: [/home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/MANIFEST.in, /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/setup.py,
+  /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/Buzzer_As_A_Service/__init__.py]
+init_file: null
+keywords: [IRC, pyAudio]
+license: MIT License
+manifest: /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/MANIFEST.in
+name: Buzzer_As_A_Service
+project_dir: /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service
+requires: [PyAudio, Twisted]
+setup_file: /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/setup.py
+shortname: BaaS
+source_dir: /home/liam/repos/buzzer-as-a-service/Buzzer_As_A_Service/Buzzer_As_A_Service
+url: https://github.com/liam-middlebrook/buzzer-as-a-service
+version: 0.1.0
