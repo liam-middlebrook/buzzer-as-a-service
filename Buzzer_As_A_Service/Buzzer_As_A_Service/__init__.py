@@ -1,6 +1,7 @@
 import pyaudio
 import wave
 import sys
+import re
 
 from threading import Thread
 from twisted.words.protocols.irc import IRCClient
@@ -10,10 +11,11 @@ from twisted.internet import reactor
 class BuzzerBot(IRCClient):
     
     chunk = 1024
-    channel = "#libMINX"
+    channel = "#rit-foss"
     bot_name = "buzzer_bot"
     lineRate = 1
     p = pyaudio.PyAudio()
+    buzzerRegex = re.compile(r'b((z+t)|(uzzer))')
 
     def playBuzzer(self):
         wf = wave.open("../../buzzer.wav", 'rb')
@@ -47,7 +49,8 @@ class BuzzerBot(IRCClient):
        if channel == self.nickname:
            self.msg(user, "BUZZZ")
        else:
-           if "buzzer" in msg.lower():
+           regexMsg =  self.buzzerRegex.findall(msg.lower())
+           if regexMsg and 'kettle' not in user:
                task = Thread(target=self.playBuzzer())
 	       task.start()
                self.msg(channel, "Played Buzzer!")
