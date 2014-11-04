@@ -6,10 +6,10 @@ use_setuptools()
 
 from setuptools import setup, find_packages
 
-version = "0.1.0"
+version = "0.1.1"
 
 setup(
-    name="BaaS",
+    name="buzzer_as_a_service",
     version=version,
     description="IRC Bot to play an audible buzzer sound",
     classifiers=[],

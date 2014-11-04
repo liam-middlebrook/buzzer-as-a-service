@@ -23,7 +23,7 @@ class BuzzerBot(IRCClient):
     buzzerRegex = re.compile(r'b((z+t)|(uzzer))')
 
     # import plugins namespace
-    plugin = __import__('baas')
+    plugin = __import__('buzzer_as_a_service')
 
     modNames = []
         
