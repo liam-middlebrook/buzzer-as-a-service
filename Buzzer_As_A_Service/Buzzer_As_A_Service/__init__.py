@@ -38,7 +38,7 @@ class BuzzerBot(IRCClient):
     for name in modNames:
         __import__(name)
         pluginExt = getattr(plugin, name.split('.')[1])
-        
+        print "loading extension:", name 
         for name, obj in inspect.getmembers(pluginExt):
             if inspect.isclass(obj):
                 extensions.append(obj())
