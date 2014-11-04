@@ -16,7 +16,7 @@ base_dir = os.path.dirname(__file__)
 
 class BuzzerBot(IRCClient):
     chunk = 1024
-    channel = "#libMINX"
+    channel = "#rit-foss"
     bot_name = "buzzer_bot"
     lineRate = 1
     p = pyaudio.PyAudio()
