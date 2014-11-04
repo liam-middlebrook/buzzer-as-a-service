@@ -30,8 +30,8 @@ setup(
         "Twisted",
     ],
     #TODO: Deal with entry_points
-    #entry_points="""
-    #[console_scripts]
-    #pythong = pythong.util:parse_args
-    #"""
+    entry_points={
+    'console_scripts': [
+    'BaaS = Buzzer_As_A_Service:main'],
+    },
 )

@@ -4,7 +4,9 @@ import sys
 import re
 import class_loader
 import os
+import inspect
 
+from pkgutil import walk_packages
 from threading import Thread
 from twisted.words.protocols.irc import IRCClient
 from twisted.internet.protocol import ReconnectingClientFactory
@@ -20,9 +22,27 @@ class BuzzerBot(IRCClient):
     p = pyaudio.PyAudio()
     buzzerRegex = re.compile(r'b((z+t)|(uzzer))')
 
-    print "Loading extensions"
-    extensions = class_loader.get_classes(os.path.join(base_dir, "plugins"))
-    if extensions is None: extensions = [] 
+    # import plugins namespace
+    plugin = __import__('baas')
+
+    modNames = []
+        
+    # Get a list of plugin module names
+    for importer, modName, isPkg in walk_packages(path=plugin.__path__,
+                                                  prefix=plugin.__name__+'.',
+                                                  onerror=lambda x: None):
+        modNames.append(modName)
+
+    # Import each module and create an instance of all of its classes
+    extensions = []
+    for name in modNames:
+        __import__(name)
+        pluginExt = getattr(plugin, name.split('.')[1])
+        
+        for name, obj in inspect.getmembers(pluginExt):
+            if inspect.isclass(obj):
+                extensions.append(obj())
+ 
     print "Extensions Loaded"
 
     def playBuzzer(self, filePath):
@@ -63,26 +83,29 @@ class BuzzerBot(IRCClient):
 
     def buzzer(self, channel, user, msg):
         for ext in self.extensions:
-	    ext.buzzer(channel, user, msg)
+            ext.buzzer(channel, user, msg)
         task = Thread(target=self.playBuzzer("../../buzzer.wav"))
-	task.start()
-	self.msg(channel, "Played Buzzer!")
+        task.start()
+        self.msg(channel, "Played Buzzer!")
 
 class BuzzerBotFactory(ReconnectingClientFactory):
     active_bot = None
 
     def __init__(self, protocol=BuzzerBot):
         self.protocol = protocol
-	self.channel = protocol.channel
-	IRCClient.nickname = protocol.bot_name
-	IRCClient.realname = protocol.bot_name
+        self.channel = protocol.channel
+        IRCClient.nickname = protocol.bot_name
+        IRCClient.realname = protocol.bot_name
 
     def add_bot(self, bot):
         self.active_bot = bot
 
-if __name__ == '__main__':
+def main():
     f = BuzzerBotFactory()
 
     reactor.connectTCP("irc.freenode.net", 6667, f)
 
     reactor.run()
+
+if __name__ == '__main__':
+    main()
